@@ -4,12 +4,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Karla:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
 
-@layer base {
-    body {
-        @apply bg-gray-50
-      dark:bg-gray-900
-      text-gray-900
-      dark:text-gray-50
-      transition-colors;
-    }
+:root{
+  --font-family: 'Karla', sans-serif;
+  --font-family-title: 'Nunito', sans-serif;
+
+  --background-color: #f6f6f6;
+  --foreground-color: #003cff;
+  --primary-text-color: #0a0a0a;
+  --secondary-text-color: #fff;
+  --toggle-bg: #f0eb9d;
+  --toggle-fg: #ffd000;
+}
+
+[data-theme="dark"] {
+  --background-color: #0a0a0a;
+  --foreground-color: #ffd000;
+  --primary-text-color: #fff;
+  --secondary-text-color: #0a0a0a;
+  --toggle-bg: #f0eb9d;
+  --toggle-fg: #ffd000;
 }
