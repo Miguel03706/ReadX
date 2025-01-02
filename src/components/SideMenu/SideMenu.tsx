@@ -1,8 +1,16 @@
 import React from 'react'
 import './styles.css'
 
-export default function SideMenu({ children }: { children: React.ReactNode }) {
+interface SideMenuProps {
+    children: React.ReactNode
+    theme: string
+}
+
+export default function SideMenu({ children, theme }: SideMenuProps) {
+
     return (
-        <div className='iten-list'>{children}</div>
+        <div className={`iten-list border-2 border-t-0 ${theme === ' dark' ? 'bg - gray - 800 text - white' : 'bg - gray - 100 text - black'}`}>
+            {children}
+        </div>
     )
 }

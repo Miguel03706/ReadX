@@ -1,6 +1,5 @@
 "use client"
-import IconBookDark from '../../assets/icons/book-outline.svg'
-import IconBookLight from '../../assets/icons/book.svg'
+import IconBook from '../../assets/icons/book.svg'
 import SideMenu from '../SideMenu/SideMenu'
 import Iten from '../SideMenu/Iten/Iten'
 import React from 'react'
@@ -12,13 +11,13 @@ interface NavigationProps {
 
 export default function Navigation({ theme }: NavigationProps) {
     return (
-        <div className='navigation'>
-            <SideMenu>
-                <Iten icon={theme === "light" ? "" : ""}>Meus livros</Iten>
+        <div className={`navigation ${theme === ' dark' ? 'bg - gray - 800 text - white' : 'bg - gray - 100 text - black'}`} >
+            <SideMenu theme={theme}>
+                <Iten icon={IconBook}>Meus livros</Iten>
             </SideMenu>
             <div>
                 pagina em questão
             </div>
-        </div>
+        </ div >
     )
 }
