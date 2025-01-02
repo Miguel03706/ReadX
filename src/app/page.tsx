@@ -1,21 +1,21 @@
 "use client"
-import Toggle from '@/components/Toggle/Toggle'
-import { themeFunctions } from '@/contexts/Theme/ChangeTheme'
-import Link from 'next/link'
+import HeaderMenu from "@/components/HeaderMenu/HeaderMenu";
+import Navigation from "@/components/Navigation/Navigation";
 
-import React from 'react'
+import { useTheme } from "@/contexts/Theme/ThemeProvider";
 
 export default function Inicio() {
-
-  const theme = themeFunctions.getTheme();
-
-  function handleChangeTheme() {
-    themeFunctions.changeTheme(theme === 'light' ? 'dark' : 'light')
-  }
+  const { theme } = useTheme();
 
   return (
-    <div>
-      <Toggle theme={theme} changeTheme={handleChangeTheme} />
+    <div
+      className={`${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'
+        }`}
+    >
+      <div>
+        <HeaderMenu theme={theme} />
+        <Navigation theme={theme} />
+      </div>
     </div>
-  )
-}
+  );
+} 

@@ -1,14 +1,19 @@
-import React from 'react'
+"use client"
+import { useTheme } from "@/contexts/Theme/ThemeProvider";
 
-export default function ({ theme, changeTheme }: { theme: string, changeTheme: () => void }) {
+export default function ThemeSwitcher() {
+    const { theme, toggleTheme } = useTheme();
+
     return (
-        <div>
-            <button
-                className='Toggle'
-                onClick={() => changeTheme}
-            >
-                {theme === 'light' ? '🌞' : '🌜'}
-            </button>
-        </div>
-    )
+        <button
+            onClick={toggleTheme}
+            className="p-2 border rounded"
+            style={{
+                backgroundColor: theme === 'dark' ? '#333' : '#fff',
+                color: theme === 'dark' ? '#fff' : '#000',
+            }}
+        >
+            {theme === 'dark' ? '☀️' : '🌑'}
+        </button>
+    );
 }
