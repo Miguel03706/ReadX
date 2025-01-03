@@ -1,7 +1,5 @@
 "use client"
-import HeaderMenu from "@/components/HeaderMenu/HeaderMenu";
 import Navigation from "@/components/Navigation/Navigation";
-
 import { useTheme } from "@/contexts/Theme/ThemeProvider";
 
 export default function Inicio() {
@@ -13,8 +11,11 @@ export default function Inicio() {
         }`}
     >
       <div>
-        <HeaderMenu theme={theme} />
-        <Navigation theme={theme} />
+        <Navigation theme={theme} >
+          <div className="p-4">
+            <h1 className="text-2xl font-bold">Início</h1>
+          </div>
+        </Navigation>
       </div>
     </div>
   );

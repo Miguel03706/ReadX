@@ -1,5 +1,6 @@
 .iten {
-  display: flex;
+  display: grid;
+  grid-template-columns: 30px 1fr;
   justify-content: center;
   align-items: center;
   gap: 10px;
