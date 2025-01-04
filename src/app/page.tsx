@@ -1,6 +1,8 @@
 "use client"
 import Navigation from "@/components/Navigation/Navigation";
 import { useTheme } from "@/contexts/Theme/ThemeProvider";
+import GridBooks from './../components/GridBooks/GridBooks';
+import AddBook from "@/components/AddBook/AddBook";
 
 export default function Inicio() {
   const { theme } = useTheme();
@@ -13,7 +15,23 @@ export default function Inicio() {
       <div>
         <Navigation theme={theme} >
           <div className="p-4">
-            <h1 className="text-2xl font-bold">Início</h1>
+            <h1 className="text-2xl font-bold">
+              <div className="flex justify-center align-center">
+                <AddBook />
+              </div>
+              <GridBooks>
+                <div>a</div>
+                <div>a</div>
+                <div>a</div>
+                <div>a</div>
+                <div>a</div>
+                <div>a</div>
+                <div>a</div>
+                <div>a</div>
+                <div>a</div>
+                <div>a</div>
+              </GridBooks>
+            </h1>
           </div>
         </Navigation>
       </div>
