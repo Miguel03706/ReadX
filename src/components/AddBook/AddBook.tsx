@@ -1,49 +1,54 @@
 import React, { useRef } from 'react';
+import Api from '@/services/api/api.js'; // Certifique-se de que este caminho esteja correto
 
-const UploadPDF: React.FC = () => {
+export default function AddBook() {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedFile = event.target.files?.[0]; // Verifica se existe um arquivo selecionado
-        if (selectedFile && selectedFile.type === 'application/pdf') {
-            try {
-                // Usando File System Access API (se suportado)
-                if ('showSaveFilePicker' in window) {
-                    const fileHandle = await (window as any).showSaveFilePicker({
-                        suggestedName: selectedFile.name,
-                        types: [
-                            {
-                                description: 'PDF Files',
-                                accept: { 'application/pdf': ['.pdf'] },
-                            },
-                        ],
-                    });
+    // Simula o clique no input invisível
+    const handleClick = () => {
+        fileInputRef.current?.click();
+    };
 
-                    const writable = await fileHandle.createWritable();
-                    await writable.write(selectedFile);
-                    await writable.close();
-                    alert('Arquivo salvo com sucesso!');
-                } else {
-                    // Fallback para download via URL
-                    const blobUrl = URL.createObjectURL(selectedFile);
-                    const link = document.createElement('a');
-                    link.href = blobUrl;
-                    link.download = selectedFile.name;
-                    link.click();
-                    URL.revokeObjectURL(blobUrl); // Limpa o URL
-                    alert('Arquivo baixado com sucesso!');
-                }
-            } catch (error) {
-                console.error('Erro ao salvar o arquivo:', error);
-                alert('Erro ao salvar o arquivo.');
+    // Lida com a seleção de arquivo
+    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0]; // Obtém o primeiro arquivo selecionado
+
+        if (file) {
+            if (file.type !== 'application/pdf') {
+                alert('Por favor, selecione um arquivo PDF!');
+                event.target.value = ''; // Limpa o input
+                return;
             }
-        } else {
-            alert('Por favor, selecione um arquivo PDF.');
+
+            try {
+                // Lê o conteúdo do arquivo como Base64
+                const fileContent = await readFileAsBase64(file);
+
+                // Envia o arquivo para a API
+                const response = await Api.uploadFile(file.name, fileContent, "/miguel"); // Altere o caminho da rota conforme necessário
+                console.log('Arquivo enviado com sucesso:', response);
+                alert('Arquivo enviado com sucesso!');
+            } catch (error) {
+                console.error('Erro ao enviar o arquivo:', error);
+                alert('Ocorreu um erro ao enviar o arquivo.');
+            }
         }
     };
 
-    const handleClick = () => {
-        fileInputRef.current?.click(); // Simula um clique no input invisível
+    // Converte o arquivo em Base64
+    const readFileAsBase64 = (file: File): Promise<string> => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (reader.result) {
+                    resolve(reader.result.toString());
+                } else {
+                    reject(new Error('Erro ao ler o arquivo'));
+                }
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file); // Lê o arquivo como Base64
+        });
     };
 
     return (
@@ -58,6 +63,4 @@ const UploadPDF: React.FC = () => {
             <button onClick={handleClick}>Selecionar e Salvar PDF</button>
         </div>
     );
-};
-
-export default UploadPDF;
+}
